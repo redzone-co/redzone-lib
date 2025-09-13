@@ -1,0 +1,6 @@
+services:
+  redzone:
+    build: .
+    container_name: redzone
+    volumes:
+      - .:/app

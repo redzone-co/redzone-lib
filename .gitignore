@@ -1,0 +1,13 @@
+*.pyc
+
+.DS_Store
+.idea
+.mypy_cache
+.venv
+.vscode
+
+__pycache__
+/*/__pycache__
+/*/*/__pycache__
+
+tinker.py
