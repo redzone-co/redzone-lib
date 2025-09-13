@@ -12,31 +12,31 @@ from ..schemas.index_schemas import IndexResponse
 from ..settings import ENVIRONMENT, PROJECT_NAME, REGION, VERSION
 
 
-class AppCreator:
+class APICreator:
 
     @staticmethod
     def create(
         include_database_middleware: bool = True,
     ) -> FastAPI:
-        app = FastAPI(
+        api = FastAPI(
             title=PROJECT_NAME.capitalize(),
             version=VERSION,
             root_path=f"/{ENVIRONMENT}" if ENVIRONMENT != "local" else "",
         )
 
-        app.add_middleware(InternalServerErrorMiddleware)
+        api.add_middleware(InternalServerErrorMiddleware)
         if include_database_middleware:
-            app.add_middleware(DatabaseSessionMiddleware)
-        app.add_middleware(LoggingMiddleware)
-        app.add_middleware(TraceMiddleware)
-        app.add_middleware(
+            api.add_middleware(DatabaseSessionMiddleware)
+        api.add_middleware(LoggingMiddleware)
+        api.add_middleware(TraceMiddleware)
+        api.add_middleware(
             CORSMiddleware,
             allow_origins=["*"],
             allow_methods=["*"],
             allow_headers=["*"],
         )
 
-        @app.get("/")
+        @api.get("/")
         async def index() -> IndexResponse:
             return IndexResponse.create(
                 {
@@ -48,4 +48,4 @@ class AppCreator:
                 }
             )
 
-        return app
+        return api

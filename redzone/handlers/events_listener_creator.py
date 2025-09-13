@@ -6,8 +6,8 @@ import sentry_sdk
 
 from .. import bootstrap  # noqa
 from ..handlers.events.event import Event
+from ..handlers.events.event_handler_factory import EventHandlerFactory, EventNotRegisteredError
 from ..utils.database import Database, ReplicaDatabase
-from ..utils.event_handler_factory import EventHandlerFactory, EventNotRegisteredError
 from ..utils.logger import logger
 from ..utils.trace import Trace
 
