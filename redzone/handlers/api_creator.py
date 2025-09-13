@@ -13,7 +13,6 @@ from ..settings import ENVIRONMENT, PROJECT_NAME, REGION, VERSION
 
 
 class APICreator:
-
     @staticmethod
     def create(
         include_database_middleware: bool = True,
