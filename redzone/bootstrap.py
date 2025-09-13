@@ -4,9 +4,9 @@ import sentry_sdk
 from sentry_sdk.integrations.aws_lambda import AwsLambdaIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 
-from ..settings import ENVIRONMENT, PROJECT_NAME, SENTRY_DSN
-from ..utils.logger import logger
-from ..utils.trace import Trace
+from .settings import ENVIRONMENT, PROJECT_NAME, SENTRY_DSN
+from .utils.logger import logger
+from .utils.trace import Trace
 
 if ENVIRONMENT in ["staging", "sandbox", "production"]:
     sentry_sdk.init(
