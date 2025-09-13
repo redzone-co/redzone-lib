@@ -14,7 +14,7 @@ class EventHandlerFactory:
 
     __event_handlers: dict = {}
 
-    def __init__(self, event_handlers: dict[str, AbstractEventHandler]) -> None:
+    def __init__(self, event_handlers: dict) -> None:
         # register the event source and event name to the event handlers
         self.__event_handlers = event_handlers
 

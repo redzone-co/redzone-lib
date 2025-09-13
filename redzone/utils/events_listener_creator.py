@@ -15,7 +15,7 @@ from ..utils.trace import Trace
 class EventsListenerCreator:
     @staticmethod
     def create(
-        event_handlers: dict[str, AbstractEventHandler],
+        event_handlers: dict,
     ):
         async def async_handler(event, context):
             async with ReplicaDatabase().connection():
