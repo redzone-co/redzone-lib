@@ -1,6 +1,6 @@
-from ..handlers.events.abstract_event_handler import AbstractEventHandler
-from ..handlers.events.event import Event
-from ..utils.logger import logger
+from ...handlers.events.abstract_event_handler import AbstractEventHandler
+from ...handlers.events.event import Event
+from ...utils.logger import logger
 
 
 class EventNotRegisteredError(Exception):
