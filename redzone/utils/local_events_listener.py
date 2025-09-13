@@ -10,11 +10,11 @@ import logging
 import os
 import traceback
 from signal import SIGTERM, signal
+from typing import Callable
 
 from microgue.queues.abstract_queue import AbstractQueue
 
 from .. import bootstrap  # noqa
-from ..utils.events_listener_creator import EventsListenerCreator
 from ..utils.logger import logger
 from ..utils.trace import Trace
 
@@ -32,9 +32,8 @@ class LocalListener:
     def terminate(self, *args, **kwargs):
         self.terminating = True
 
-    async def listen(self):
+    async def listen(self, events_listener: Callable):
         queue = Queue()
-        events_listener = EventsListenerCreator.create()
         while not self.terminating:
             # disable logging in local until a message is received
             logging.getLogger().setLevel(logging.CRITICAL)

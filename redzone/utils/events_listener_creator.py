@@ -1,10 +1,10 @@
 import json
 import traceback
+from typing import Callable
 
 import sentry_sdk
 
 from .. import bootstrap  # noqa
-from ..handlers.events.abstract_event_handler import AbstractEventHandler
 from ..handlers.events.event import Event
 from ..utils.database import Database, ReplicaDatabase
 from ..utils.event_handler_factory import EventHandlerFactory, EventNotRegisteredError
@@ -16,7 +16,7 @@ class EventsListenerCreator:
     @staticmethod
     def create(
         event_handlers: dict,
-    ):
+    ) -> Callable:
         async def async_handler(event, context):
             async with ReplicaDatabase().connection():
                 async with Database().connection():
