@@ -15,7 +15,7 @@ from ..settings import ENVIRONMENT, PROJECT_NAME, REGION, VERSION
 class APICreator:
     @staticmethod
     def create(
-        include_database_middleware: bool = True,
+        include_database_session_middleware: bool = False,
     ) -> FastAPI:
         api = FastAPI(
             title=PROJECT_NAME.capitalize(),
@@ -24,7 +24,7 @@ class APICreator:
         )
 
         api.add_middleware(InternalServerErrorMiddleware)
-        if include_database_middleware:
+        if include_database_session_middleware:
             api.add_middleware(DatabaseSessionMiddleware)
         api.add_middleware(LoggingMiddleware)
         api.add_middleware(TraceMiddleware)
