@@ -14,8 +14,8 @@ class ServiceToken(BaseObject):
         if token:
             return ServiceToken(token=token)
 
-        login_response = await AuthService().create_access_token_by_client_credentials(CLIENT_ID, CLIENT_SECRET)
-        token = login_response.data["access_token"]
+        create_access_token_response = await AuthService().create_access_token_by_client_credentials(CLIENT_ID, CLIENT_SECRET)
+        token = create_access_token_response.data["access_token"]
 
         await service_token_cache.set(CLIENT_ID, token)
 
