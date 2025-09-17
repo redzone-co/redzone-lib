@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .. import bootstrap  # noqa
-from ..middleware.database_session_middleware import DatabaseSessionMiddleware
 from ..middleware.internal_server_error_middleware import InternalServerErrorMiddleware
 from ..middleware.logging_middleware import LoggingMiddleware
 from ..middleware.trace_middleware import TraceMiddleware
@@ -25,7 +24,10 @@ class APICreator:
 
         api.add_middleware(InternalServerErrorMiddleware)
         if include_database_session_middleware:
+            from ..middleware.database_session_middleware import DatabaseSessionMiddleware
+
             api.add_middleware(DatabaseSessionMiddleware)
+
         api.add_middleware(LoggingMiddleware)
         api.add_middleware(TraceMiddleware)
         api.add_middleware(
