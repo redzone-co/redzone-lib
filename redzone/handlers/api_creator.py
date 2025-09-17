@@ -25,7 +25,9 @@ class APICreator:
         api.add_middleware(InternalServerErrorMiddleware)
         if include_database_session_middleware:
             from ..middleware.database_session_middleware import DatabaseSessionMiddleware
+
             api.add_middleware(DatabaseSessionMiddleware)
+
         api.add_middleware(LoggingMiddleware)
         api.add_middleware(TraceMiddleware)
         api.add_middleware(
