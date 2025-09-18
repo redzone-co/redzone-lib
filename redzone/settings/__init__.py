@@ -7,7 +7,7 @@ settings = importlib.import_module("settings")
 sys.path.pop(0)
 
 ##############################
-# REQUIRED SETTINGS
+# SETTINGS
 ##############################
 # api_creator.py
 ENVIRONMENT = getattr(settings, "ENVIRONMENT", "")
@@ -21,9 +21,6 @@ AUTH_SERVICE_URL = getattr(settings, "AUTH_SERVICE_URL", "")
 # bootstrap.py
 SENTRY_DSN = getattr(settings, "SENTRY_DSN", "")
 
-##############################
-# OPTIONAL SETTINGS
-##############################
 # cache.py
 CACHE_HOST = getattr(settings, "CACHE_HOST", "")
 CACHE_PREFIX = getattr(settings, "CACHE_PREFIX", "")
