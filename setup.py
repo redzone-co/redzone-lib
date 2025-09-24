@@ -4,7 +4,7 @@ with open("README.md") as f:
     long_description = f.read()
 
 setup(
-    name="redzone",
+    name="redzone-lib",
     version="1.0.0",
     author="RedZone Co",
     author_email="info@redzone.co",
