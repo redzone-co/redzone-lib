@@ -1,0 +1,46 @@
+name: Publish Package
+
+on:
+  push:
+    tags:
+      - "v*"   # e.g., v1.0.0
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
+
+      - name: Verify Version Matches
+        id: version
+        run: |
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          echo "VERSION=$TAG_VERSION" >> $GITHUB_OUTPUT
+          SETUP_VERSION=$(python -c "import setup; print(setup.__version__)" 2>/dev/null || python -c "exec(open('setup.py').read().split('version=')[1].split(',')[0])")
+          if [ "$SETUP_VERSION" != "$TAG_VERSION" ]; then
+            echo "Error: Tag version ($TAG_VERSION) doesn't match setup.py version ($SETUP_VERSION)"
+            exit 1
+          fi
+
+      - name: Build Package
+        run: python -m build
+
+      - name: Verify Package
+        run: |
+          # Check that the build artifacts exist
+          if [ ! -f dist/*.whl ] || [ ! -f dist/*.tar.gz ]; then
+            echo "Error: Build artifacts not found"
+            exit 1
+          fi
+          # Verify the package can be installed
+          python -m pip install dist/*.whl --force-reinstall
+
+      - name: Publish Package
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip_existing: true

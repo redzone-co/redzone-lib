@@ -1,8 +1,11 @@
 *.pyc
+*.iml
 
+.coverage
 .DS_Store
 .idea
 .mypy_cache
+.pytest_cache
 .venv
 .vscode
 
@@ -10,4 +13,17 @@ __pycache__
 /*/__pycache__
 /*/*/__pycache__
 
-tinker.py
+/.serverless
+
+node_modules
+venv
+.env
+dist
+redzone_lib.egg-info
+
+*.csv
+tinker*
+zz*
+x.*
+y.*
+z.*
