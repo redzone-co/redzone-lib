@@ -6,8 +6,8 @@ with open("README.md") as f:
 setup(
     name="redzone",
     version="1.0.0",
-    author="Michael Hudelson",
-    author_email="mhudelson@redzone.co",
+    author="RedZone Co",
+    author_email="info@redzone.co",
     description="Contains common utilities for use across Redzone projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
