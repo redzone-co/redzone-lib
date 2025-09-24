@@ -5,7 +5,7 @@ with open("README.md") as f:
 
 setup(
     name="redzone-lib",
-    version="1.0.0",
+    version="0.0.0",  # automatically replaced by CI/CD pipeline
     author="RedZone Co",
     author_email="info@redzone.co",
     description="Contains common utilities for use across Redzone projects",
