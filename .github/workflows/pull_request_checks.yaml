@@ -1,0 +1,13 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  lint:
+    uses: ./.github/workflows/lint.yaml
+  mypy:
+    uses: ./.github/workflows/mypy.yaml
+  format:
+    uses: ./.github/workflows/format.yaml

@@ -1,0 +1,20 @@
+name: Format
+
+on:
+  workflow_call:
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Branch
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
+
+      - name: Black
+        run: black --check --diff .
+
+      - name: Isort
+        run: isort --check-only .
