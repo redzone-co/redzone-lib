@@ -1,0 +1,11 @@
+name: Tag To Main
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  publish:
+    uses: ./.github/workflows/publish.yaml
+    secrets: inherit
