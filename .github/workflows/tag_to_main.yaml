@@ -8,6 +8,4 @@ on:
 jobs:
   publish:
     uses: ./.github/workflows/publish.yaml
-    with:
-      environment: production
     secrets: inherit

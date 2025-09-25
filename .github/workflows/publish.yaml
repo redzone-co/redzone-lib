@@ -6,17 +6,13 @@ permissions:
 
 on:
   workflow_call:
-    inputs:
-      environment:
-        required: true
-        type: string
 
 concurrency:
-  group: deploy-${{ inputs.environment }}
+  group: publish
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +31,6 @@ jobs:
 
       - name: Verify Package
         run: |
-          # Verify the package can be installed
           python -m pip install dist/*.whl --force-reinstall
 
       - name: Publish Package
