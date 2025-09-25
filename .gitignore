@@ -21,7 +21,6 @@ venv
 dist
 redzone_lib.egg-info
 
-*.csv
 tinker*
 zz*
 x.*
