@@ -5,7 +5,7 @@ from typing import Callable
 
 import sentry_sdk
 
-from redzone.utils.logger import logger
+from ..utils.logger import logger
 
 
 def handler(func: Callable) -> Callable:
