@@ -8,7 +8,7 @@ import sentry_sdk
 from ..utils.logger import logger
 
 
-def handler(func: Callable) -> Callable:
+def aws_handler(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
