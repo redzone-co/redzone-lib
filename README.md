@@ -1,5 +1,5 @@
-# Redzone Common Utilities
-Contains common utilities for use across Redzone projects
+# RedZone Common Utilities
+Contains common utilities for use across RedZone projects
 
 ---
 
