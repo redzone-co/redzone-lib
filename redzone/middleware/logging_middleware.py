@@ -4,7 +4,7 @@ from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
 
-from ..utils.logger import logger
+from ..utils.logger import Logger, logger
 
 
 class LoggingMiddleware(BaseHTTPMiddleware):
@@ -21,7 +21,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             request_body = json.loads(await request.body())
         except json.JSONDecodeError:
             request_body = {}
-        logger.debug(f"body: {request_body}")
+        logger.debug(Logger.truncate(f"body: {request_body}"))
 
         # get the response
         response = await call_next(request)
@@ -35,7 +35,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         logger.debug("Response Sent", priority=1)
         logger.debug(f"status: {response.status_code}")
         logger.debug(f"headers: {dict(response.headers)}")
-        logger.debug(f"body: {response_body.decode()}")
+        logger.debug(Logger.truncate(f"body: {response_body.decode()}"))
 
         return Response(
             content=response_body,
