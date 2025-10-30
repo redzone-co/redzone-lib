@@ -4,8 +4,6 @@ from microgue.loggers.logger import Logger as _Logger
 
 from ..settings import PROJECT_NAME
 
-MAX_LOG_LENGTH = 1000
-
 
 class Logger(_Logger):
     __instance = None
@@ -13,8 +11,8 @@ class Logger(_Logger):
 
     def log(self, message, priority=None, level=logging.DEBUG):
         message = str(message)
-        if len(message) > MAX_LOG_LENGTH:
-            message = message[:MAX_LOG_LENGTH] + "... (truncated)"
+        if len(message) > self.max_log_length:
+            message = message[:self.max_log_length] + "... (truncated)"  # fmt: skip
         super().log(message, priority, level)
 
 
