@@ -9,6 +9,7 @@ MAX_LOG_LENGTH = 1000
 
 class Logger(_Logger):
     __instance = None
+    max_log_length = 1000
 
     def log(self, message, priority=None, level=logging.DEBUG):
         message = str(message)
