@@ -6,8 +6,6 @@ from ..services.auth_service import AuthService
 
 
 class Auth(HTTPBearer):
-    scopes: tuple[str, ...]
-
     def __init__(self, *allowed_scopes: str | list) -> None:
         super().__init__()
         self.allowed_scopes: tuple = allowed_scopes
