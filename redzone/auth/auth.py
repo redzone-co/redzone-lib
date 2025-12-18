@@ -6,11 +6,10 @@ from ..services.auth_service import AuthService
 
 
 class Auth(HTTPBearer):
-    scopes: tuple[str, ...]
-
-    def __init__(self, *allowed_scopes: str | list) -> None:
+    def __init__(self, *allowed_scopes: str | list, auth_service: AuthService | None = None) -> None:
         super().__init__()
         self.allowed_scopes: tuple = allowed_scopes
+        self.auth_service: AuthService = auth_service or AuthService()
 
     async def __call__(self, request: Request) -> None:
         authorization = request.headers.get("Authorization", "")
@@ -23,7 +22,7 @@ class Auth(HTTPBearer):
         if token_type != "Bearer":
             raise NotAuthenticated()
 
-        introspect_response = await AuthService().introspect(token)
+        introspect_response = await self.auth_service.introspect(token)
 
         if introspect_response.status_code != 200:
             raise NotAuthenticated()
