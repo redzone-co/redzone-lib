@@ -6,3 +6,4 @@ from ..settings import CACHE_HOST, CACHE_PREFIX
 class Cache(AbstractCache):
     host = CACHE_HOST
     prefix = f"{CACHE_PREFIX}"
+    connection_timeout = 3
