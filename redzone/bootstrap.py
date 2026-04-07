@@ -22,7 +22,6 @@ if ENVIRONMENT in ["staging", "sandbox", "production"]:
     )
 
 # disable 3rd party logging
-logging.getLogger().setLevel(logging.CRITICAL)
 logging.getLogger("aiobotocore").setLevel(logging.CRITICAL)
 logging.getLogger("asyncio").setLevel(logging.CRITICAL)
 logging.getLogger("boto3").setLevel(logging.CRITICAL)
