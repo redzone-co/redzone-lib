@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
 
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from mangum import Mangum
 
 from .. import bootstrap  # noqa
 from ..middleware.internal_server_error_middleware import InternalServerErrorMiddleware
@@ -14,6 +15,7 @@ from ..settings import ENVIRONMENT, PROJECT_NAME, REGION, VERSION
 class APICreator:
     @staticmethod
     def create(
+        routers: list[APIRouter] = [],
         include_database_session_middleware: bool = False,
     ) -> FastAPI:
         api = FastAPI(
@@ -37,6 +39,9 @@ class APICreator:
             allow_headers=["*"],
         )
 
+        for router in routers:
+            api.include_router(router)
+
         @api.get("/")
         async def index() -> IndexResponse:
             return IndexResponse.create(
@@ -49,4 +54,4 @@ class APICreator:
                 }
             )
 
-        return api
+        return Mangum(api, lifespan="off")
