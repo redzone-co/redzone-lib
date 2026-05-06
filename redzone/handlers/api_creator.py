@@ -2,7 +2,6 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from mangum import Mangum
 
 from .. import bootstrap  # noqa
 from ..middleware.internal_server_error_middleware import InternalServerErrorMiddleware
@@ -54,4 +53,4 @@ class APICreator:
                 }
             )
 
-        return Mangum(api, lifespan="off")
+        return api
