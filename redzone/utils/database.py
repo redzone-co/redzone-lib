@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engin
 from sqlalchemy.orm import sessionmaker
 
 from .. import settings
-from ..context import database_session
+from ..context import database_session, replica_database_session
 
 
 class MissingSessionException(Exception):
@@ -89,6 +89,26 @@ class Database:
 
 class ReplicaDatabase(Database):
     __instance = None
+    __engine: AsyncEngine
+    static_session: AsyncSession | None = None
+
+    def start_session(self) -> AsyncSession:
+        # start a new database session
+        try:
+            replica_database_session.set(self.create_session())  # type: ignore
+        except:  # noqa
+            self.static_session = self.create_session()
+        return self.get_session()
+
+    def get_session(self) -> AsyncSession:
+        # get the current database session
+        if self.static_session is not None:
+            return self.static_session
+        else:
+            try:
+                return replica_database_session.get()  # type: ignore
+            except:  # noqa
+                raise MissingSessionException()
 
     @classmethod
     def __create_engine(cls) -> AsyncEngine:
