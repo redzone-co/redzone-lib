@@ -14,16 +14,16 @@ class MissingSessionException(Exception):
 
 
 class Database:
-    __instance = None
-    __engine: AsyncEngine
+    _instance = None
+    _engine: AsyncEngine
     static_session: AsyncSession | None = None
 
     def __new__(cls) -> "Database":
         # create a singleton instance of the database engine
-        if cls.__instance is None:
-            cls.__instance = object.__new__(cls)
-            cls.__engine = cls.__create_engine()
-        return cls.__instance
+        if cls._instance is None:
+            cls._instance = object.__new__(cls)
+            cls._engine = cls._create_engine()
+        return cls._instance
 
     @classmethod  # type: ignore
     @property
@@ -62,7 +62,7 @@ class Database:
 
     def create_session(self) -> AsyncSession:
         # create a new database session for interacting with the database
-        session = sessionmaker(self.__engine, class_=AsyncSession)()  # type: ignore
+        session = sessionmaker(self._engine, class_=AsyncSession)()  # type: ignore
 
         # rename session.begin to session.transaction
         session.transaction = session.begin
@@ -70,7 +70,7 @@ class Database:
         return session
 
     @classmethod
-    def __create_engine(cls) -> AsyncEngine:
+    def _create_engine(cls) -> AsyncEngine:
         # create a new database engine to be used when creating sessions
         connection_url = engine.URL.create(
             "postgresql+asyncpg",
@@ -88,8 +88,8 @@ class Database:
 
 
 class ReplicaDatabase(Database):
-    __instance = None
-    __engine: AsyncEngine
+    _instance = None
+    _engine: AsyncEngine
     static_session: AsyncSession | None = None
 
     def start_session(self) -> AsyncSession:
@@ -111,7 +111,7 @@ class ReplicaDatabase(Database):
                 raise MissingSessionException()
 
     @classmethod
-    def __create_engine(cls) -> AsyncEngine:
+    def _create_engine(cls) -> AsyncEngine:
         # create a new database engine to be used when creating sessions
         connection_url = engine.URL.create(
             "postgresql+asyncpg",
