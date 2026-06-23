@@ -33,9 +33,8 @@ class Database:
     @asynccontextmanager
     async def connection(self):
         # provide context manager to start and close database session
-        session = self.start_session()
         try:
-            yield session
+            yield self.start_session()
         finally:
             await self.close_session()
 
