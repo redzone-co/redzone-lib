@@ -14,6 +14,6 @@ class Service(_Service):
     class Response(_Service.Response):
         pass
 
-    async def invoke(self, request: _Service.Request) -> _Service.Response:
+    async def invoke(self, request: _Service.Request, timeout: float = 5.0) -> _Service.Response:
         request.headers["X-Trace-ID"] = Trace.get_trace_id()
-        return await super().invoke(request)
+        return await super().invoke(request, timeout=timeout)
