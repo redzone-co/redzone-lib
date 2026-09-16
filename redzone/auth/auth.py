@@ -1,7 +1,7 @@
 from fastapi import Request
 from fastapi.security import HTTPBearer
 
-from ..exceptions.auth_exceptions import NotAuthenticated, NotAuthorized
+from ..exceptions.auth_exceptions import AuthServiceError, NotAuthenticated, NotAuthorized
 from ..services.auth_service import AuthService
 
 
@@ -23,8 +23,11 @@ class Auth(HTTPBearer):
 
         introspect_response = await AuthService().introspect(token)
 
-        if introspect_response.status_code != 200:
+        if introspect_response.status_code == 401:
             raise NotAuthenticated()
+
+        if introspect_response.status_code != 200:
+            raise AuthServiceError()
 
         token_scopes = introspect_response.data.get("scope", "").split()
 
