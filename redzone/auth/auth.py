@@ -3,7 +3,6 @@ from fastapi.security import HTTPBearer
 
 from ..exceptions.auth_exceptions import AuthServiceError, NotAuthenticated, NotAuthorized
 from ..services.auth_service import AuthService
-from ..utils.logger import logger
 
 
 class Auth(HTTPBearer):
@@ -28,7 +27,6 @@ class Auth(HTTPBearer):
             raise NotAuthenticated()
 
         if introspect_response.status_code != 200:
-            logger.error(f"auth service introspect failed - {introspect_response.status_code} - {introspect_response.data}")
             raise AuthServiceError()
 
         token_scopes = introspect_response.data.get("scope", "").split()
