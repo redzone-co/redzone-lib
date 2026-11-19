@@ -40,6 +40,12 @@ class WorkflowTracker:
             self.workflow["warnings"].extend(warnings)
         await self._save()
 
+    async def partially_complete_step(self, step: str, warnings: list | None = None):
+        self.workflow[step] = "partially_completed"
+        if warnings:
+            self.workflow["warnings"].extend(warnings)
+        await self._save()
+
     async def fail_step(self, step: str, errors: list | None = None):
         self.workflow[step] = "failed"
         if errors:
