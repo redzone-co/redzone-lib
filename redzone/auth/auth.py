@@ -21,9 +21,14 @@ class Auth(HTTPBearer):
         if token_type != "Bearer":
             raise NotAuthenticated()
 
+        # a jwt is printable ascii; httpx cannot send anything else (like a nul) to identity
+        if not (token.isascii() and token.isprintable()):
+            raise NotAuthenticated()
+
         introspect_response = await AuthService().introspect(token)
 
-        if introspect_response.status_code == 401:
+        # identity answers 400 when it cannot decode the token
+        if introspect_response.status_code in (400, 401):
             raise NotAuthenticated()
 
         if introspect_response.status_code != 200:

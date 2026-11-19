@@ -28,4 +28,5 @@ setup(
         "redzone.utils",
     ],
     python_requires=">=3.10",
+    install_requires=["microgue>=4.2.9"],
 )
